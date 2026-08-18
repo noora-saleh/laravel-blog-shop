@@ -12,7 +12,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-$articles = Article::simplePaginate(2);        return view('articles.index', compact('articles'));
+$articles = Article::simplePaginate(2);  
+      return view('articles.index', compact('articles'));
     }
 
     /**
@@ -22,7 +23,7 @@ $articles = Article::simplePaginate(2);        return view('articles.index', com
 public function create()
 {
     return view('articles.create');
-}
+} 
 
     /**
      * Store a newly created resource in storage.
@@ -36,8 +37,7 @@ public function store(Request $request)
         'status' => $request->status,
     ]);
 
-    // إعادة التوجيه لصفحة عرض جميع المقالات
-    return redirect('/articles');
+return redirect()->route('articles.index');
 }
 
     /**
@@ -78,4 +78,5 @@ public function store(Request $request)
         $article->delete();
         return redirect()->route('articles.index');
     }
+
 }

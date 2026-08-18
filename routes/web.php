@@ -1,61 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-
-
 use App\Http\Controllers\ArticleController;
-
-Route::resource('articles', ArticleController::class);
-/*
-use App\Http\Controllers\NoticeController;
-
-// إنشاء الـ 7 مسارات الأساسية بكلمة واحدة
-Route::resource('notices', NoticeController::class);
-
-use App\Http\Controllers\NameController; 
-
-Route::get('/names', [NameController::class, 'index'])->name('names.index');
-*/
-/*
-Route::resource('Home', HomeController::class);
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/hello', function () {
-    return view('hello');
-});
-Route::get('/add', function () {
-    return view('hello');
-});
-Route::get('/', function () {
-    return 'مرحباً بك في موقعنا!';
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    // مسارات الملف الشخصي
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // مسارات إضافة وتعديل وحذف المقالات (تتطلب تسجيل دخول)
+    Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+    Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
+    Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+    Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+    Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 });
 
-Route::get('/about', function () {
-    return 'هذه صفحة من نحن.';
-});
-// 1. معامل إلزامي: {id} يجب أن يمرر في الرابط
-Route::get('/post/{id}', function ($id) {
-    return 'عرض المقال رقم: ' . $id;
-});
+// مسارات عرض المقالات (متاحة للجميع)
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 
-// 2. معامل اختياري: {name?} ينتهي بـ ? وله قيمة افتراضية
-Route::get('/user/{name?}', function ($name = 'زائر') {
-    return 'أهلاً بك يا: ' . $name;
-});
-
-
-// 1. مسار لعرض قائمة المقالات مع إعطائه اسماً مستعاراً
-Route::get('/all-articles-list', [PostController::class, 'index'])->name('posts.index');
-
-// 2. مسار الصفحة الرئيسية
-Route::get('/hello', function () {
-    return view('hello');
-});
-Route::get('/posts', [PostController::class, 'index']); 
-Route::get('/users', [UserController::class, 'index']);
-
-*/
+require __DIR__.'/auth.php';

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي - @yield('title')</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'موقعي')</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* إعدادات الخط والصفحة العامة */
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #f8fafc;
@@ -25,7 +26,6 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* العناوين والروابط */
         h1 {
             font-size: 1.8rem;
             color: #0f172a;
@@ -50,7 +50,6 @@
             color: #1d4ed8;
         }
 
-        /* أزرار الإجراءات الرئيسية */
         .btn-primary {
             display: inline-block;
             background-color: #2563eb;
@@ -66,7 +65,6 @@
             color: #ffffff;
         }
 
-        /* بطاقة المقال (Article Card) */
         .article-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -90,7 +88,6 @@
             margin-top: 8px;
         }
 
-        /* مجموعات الأزرار (Actions) */
         .action-group {
             display: flex;
             gap: 8px;
@@ -124,7 +121,6 @@
         .btn-submit { background-color: #16a34a; color: white; width: 100%; margin-top: 10px; }
         .btn-submit:hover { background-color: #15803d; }
 
-        /* النماذج وحقول الإدخال */
         .form-group {
             margin-bottom: 18px;
         }
@@ -157,7 +153,6 @@
             min-height: 120px;
         }
 
-        /* تفاصيل المقال (Show Page) */
         .meta-info {
             font-size: 0.85rem;
             color: #64748b;
@@ -169,9 +164,10 @@
 </head>
 <body>
 
-    <div class="container">
+    <main class="container">
+        {{ $slot ?? '' }}
         @yield('content')
-    </div>
+    </main>
 
 </body>
 </html>

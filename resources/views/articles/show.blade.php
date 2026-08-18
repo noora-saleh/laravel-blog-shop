@@ -4,10 +4,10 @@
 
 @section('content')
 
-    <a href="{{ route('articles.index') }}">← العودة للقائمة</a>
+    <a href="{{ route('articles.index') }}" style="display: inline-block; margin-bottom: 15px;">← العودة للقائمة</a>
 
     <h1>{{ $article->title }}</h1>
-    <p style="line-height: 1.6; font-size: 1.1rem;">{{ $article->body }}</p>
+    <p style="line-height: 1.6; font-size: 1.1rem; color: #334155;">{{ $article->body }}</p>
     
     <span class="article-status"><strong>الحالة:</strong> {{ $article->status }}</span>
 
